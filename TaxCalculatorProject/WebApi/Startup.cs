@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Interfaces.TaxCalculation;
+using WebApi.TaxCalculation;
 
 namespace WebApi
 {
@@ -39,6 +41,10 @@ namespace WebApi
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ITaxCalculationRepository, TaxCalculationRepository>();
             services.AddTransient<IPostalCodeTaxCalculationTypeRepository, PostalCodeTaxCalculationTypeRepository>();
+            #endregion
+
+            #region Factories
+            services.AddTransient<ITaxCalculatorFactory, TaxCalculatorFactory>();
             #endregion
         }
 
