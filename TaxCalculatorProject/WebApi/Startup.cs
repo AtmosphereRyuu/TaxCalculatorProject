@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataAccess.EFCore;
 using DataAccess.EFCore.Repositories;
 using Domain.Interfaces;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApi.AppSettingsModels;
 using WebApi.Interfaces.TaxCalculation;
+using WebApi.MapperProfiles;
 using WebApi.TaxCalculation;
 
 namespace WebApi
@@ -32,20 +35,32 @@ namespace WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
             });
 
+            // AppSettings
+            services.Configure<FlatValueTaxCalculatorOptions>(Configuration.GetSection("FlatValueTaxCalculatorOptions"));
+            services.Configure<FlatRateTaxCalculatorOptions>(Configuration.GetSection("FlatRateTaxCalculatorOptions"));
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            // DB Configurations
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
-            #region Repositories
+            // Repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ITaxCalculationRepository, TaxCalculationRepository>();
             services.AddTransient<IPostalCodeTaxCalculationTypeRepository, PostalCodeTaxCalculationTypeRepository>();
-            #endregion
 
-            #region Factories
+            // Factories
             services.AddTransient<ITaxCalculatorFactory, TaxCalculatorFactory>();
-            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

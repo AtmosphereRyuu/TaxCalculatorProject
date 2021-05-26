@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Domain.Interfaces;
 
 namespace DataAccess.EFCore.Repositories
@@ -17,19 +16,11 @@ namespace DataAccess.EFCore.Repositories
         {
             Context.Set<T>().Add(entity);
         }
-        public void AddRange(IEnumerable<T> entities)
-        {
-            Context.Set<T>().AddRange(entities);
-        }
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
-        {
-            return Context.Set<T>().Where(expression);
-        }
         public IEnumerable<T> GetAll()
         {
             return Context.Set<T>().ToList();
         }
-        public T GetById(int id)
+        public T GetById(Guid id)
         {
             return Context.Set<T>().Find(id);
         }
@@ -37,11 +28,6 @@ namespace DataAccess.EFCore.Repositories
         {
             Context.Set<T>().Remove(entity);
         }
-        public void RemoveRange(IEnumerable<T> entities)
-        {
-            Context.Set<T>().RemoveRange(entities);
-        }
-
         public void Complete()
         {
             Context.SaveChanges();
