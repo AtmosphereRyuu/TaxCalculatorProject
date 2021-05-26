@@ -1,0 +1,17 @@
+How to initialize database:
+1) Open solution in VS 2019.
+2) Update "DefaultConnection" setting in appsettings.json in WebApi project to point to local SQL server.
+3) Make sure that solution is set to start up as a single project for WebApi:
+	-	right click solution in VS2019.
+	-	Common Properties -> Startup Project -> Single Startup project - WebApi.
+4) Open Package Manager Console.
+	-	Tools -> NuGet Package Manager -> Package Manager Console.
+5) In Package Manager Console, make sure that the "Default project" setting is "DataAccess.EFCore".
+6) Execute "Update-Database" in Package Manager Console
+7) Database TaxCalculatorProjectDb should now have been created in your SQL server.
+
+How to run application:
+1) Open solution in VS 2019.
+2) Make sure that solution is set to start multiple projects:
+	-	right click solution in VS2019.
+	-	Common Properties -> Startup Project -> Multiple startup projects -> set Action to Start for WebApi and WebApp.
