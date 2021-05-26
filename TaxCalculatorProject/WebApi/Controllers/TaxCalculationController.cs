@@ -11,7 +11,7 @@ using WebApi.Interfaces.TaxCalculation;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TaxCalculationController: WebApiControllerBase
     {
         private readonly IPostalCodeTaxCalculationTypeRepository _postalCodeTaxCalculationTypeRepository;
@@ -79,7 +79,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(TaxCalculationPostModel taxCalculationPostModel)
+        public async Task<IActionResult> PostTaxCalculation(TaxCalculationPostModel taxCalculationPostModel)
         {
             // Get tax calculation type
             var postalCodeTaxCalculationType = _postalCodeTaxCalculationTypeRepository.GetByPostalCode(taxCalculationPostModel.PostalCode);
@@ -115,7 +115,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(Guid id)
+        public async Task<IActionResult> DeleteTaxCalculation(Guid id)
         {
             var taxCalculation = _taxCalculationRepository.GetById(id);
 
