@@ -8,3 +8,30 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="text-center">
+    <h1 class="display-4">Tax Calculator</h1>
+
+    <form method="post">
+        <table>
+
+            <tr>
+                <td>Postal Code: </td>
+                <td><input type="text" id="postalCode" name="PostalCode" /></td>
+            </tr>
+            <tr>
+                <td>Annual Income: </td>
+                <td><input type="number" id="annualIncome" name="AnnualIncome" /></td>
+            </tr>
+
+
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit" asp-page-handler="Submit" /></td>
+            </tr>
+
+        </table>
+        <hr />
+        @Model.Output
+    </form>
+</div>
